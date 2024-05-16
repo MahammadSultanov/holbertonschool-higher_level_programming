@@ -2,3 +2,4 @@
 def add(a, b):
     c = a ** b
     return c
+    print("{}{}".format(a, b), end="")
