@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-def add(a, b):
+def pow(a, b):
     c = a ** b
-    return c
-    print("{}{}".format(a, b), end="")
+    print("{}".format(c))
+    print()
