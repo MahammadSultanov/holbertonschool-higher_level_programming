@@ -8,13 +8,13 @@ if __name__ == "__main__":
         op = argv[2]
         b = int(argv[3])
         if op  == "+":
-            res = add(a,b)
+            res = add(a, b)
         elif op == "-":
-            res = sub(a,b)
+            res = sub(a, b)
         elif op == "*":
-            res = mul(a,b)
+            res = mul(a, b)
         elif op == "/":
-            res = div(a,b)
+            res = div(a, b)
         else:
             print("Unknown operator. Available operators: +, -, * and /")
             exit(1)
@@ -22,4 +22,4 @@ if __name__ == "__main__":
         print("Usage: ./100-my_calculator.py <a> <operator> <b>")
         exit(1)
 
-    print("{} {} {} = {}".format(a, op ,b, res))
+    print("{} {} {} = {}".format(a, op, b, res))
