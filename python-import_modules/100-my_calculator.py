@@ -7,7 +7,7 @@ if __name__ == "__main__":
         a = int(argv[1])
         op = argv[2]
         b = int(argv[3])
-        if op  == "+":
+        if op == "+":
             res = add(a, b)
         elif op == "-":
             res = sub(a, b)
