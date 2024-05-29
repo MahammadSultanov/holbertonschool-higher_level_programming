@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """Modul for adding two integers"""
 
+
 def add_integer(a, b=98):
     """This function adds two integers"""
     if not isinstance(a, int):
@@ -12,4 +13,3 @@ def add_integer(a, b=98):
     if isinstance(b, int):
         b = int(b)
     return int(a+b)
-
