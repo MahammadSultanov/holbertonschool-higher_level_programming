@@ -1,9 +1,11 @@
 #!/usr/bin/python3
-"""Modul for prints a text with 2 new lines after each of these characters: ., ? and : """
+"""Modul for prints a text with 2 new lines after
+each of these characters: '.' ',' '?' and : """
 
 
 def text_indentation(text):
-    """ This function that prints a text with 2 new lines after each of these characters: ., ? and :"""
+    """ This function that prints a text with 2 new lines after
+    each of these characters: '.' ',' '?' and :"""
 
     if not isinstance(text, str):
         raise TypeError("text must be a string")
@@ -12,7 +14,7 @@ def text_indentation(text):
         print(text[i], end='')
         if text[i] in '.?:':
             print("\n")
-            print("", end='')
+            print("\n", end='')
             i += 1
             if i < len(text) and text[i] == ' ':
                 i += 1
