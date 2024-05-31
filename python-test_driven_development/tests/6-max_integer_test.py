@@ -23,3 +23,7 @@ class TestMaxInteger(unittest.TestCase):
     def test_empty_list(self):
         test_list = []
         self.assertEqual(max_integer(test_list), None)
+    
+    def test_middle_max(self):
+        test_list = [10, 20, 200, 50, 90]
+        self.assertEqual(max_integer(test_list), 200)
