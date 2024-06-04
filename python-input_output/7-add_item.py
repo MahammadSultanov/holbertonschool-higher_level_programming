@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/python
 """
 This module for Load, add, save task
 """
@@ -16,4 +16,3 @@ except FileNotFoundError:
 new_list.extend(words[1:])
 
 save_to_json_file(new_list, filename)
-
