@@ -11,12 +11,12 @@ def home():
 
 
 @app.route("/data")
-def data():
+def get_data():
     return jsonify(list(username.keys()))
 
 
 @app.route("/status")
-def data():
+def status():
     return "OK"
 
 
