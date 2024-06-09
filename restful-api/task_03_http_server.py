@@ -10,6 +10,7 @@ class NewHandler(http.server.BaseHTTPRequestHandler):
             self.send_header('Content-type', 'text/plain')
             self.end_headers()
             self.wfile.write(b'Hello, this is a simple API!')
+
         elif self.path == '/data':
             self.send_response(200)
             self.send_header('Content-type', 'application/json')
@@ -19,28 +20,11 @@ class NewHandler(http.server.BaseHTTPRequestHandler):
                 "age": 30,
                 "city": "New York"
             }
-            self.wfile.write(json.dumps(data).encode('utf-8'))
+            self.wfile.write(json.dumps(data).encode())
+
         elif self.path == '/status':
             self.send_response(200)
             self.send_header('Content-type', 'text/plain')
-            self.end_headers()
-            self.wfile.write(json.dumps({"OK"}).encode('utf-8'))
-
-        elif self.path == "/data":
-            self.send_response(200)
-            self.send_header("Content-type", "application/json")
-            self.end_headers()
-            response_data = {
-                "name": "John",
-                "age": 30,
-                "city": "New York"
-
-            }
-
-            self.wfile.write(json.dumps(response_data).encode('utf-8'))
-        elif self.path == "/status":
-            self.send_response(200)
-            self.send_header("Content-type", "text/plain")
             self.end_headers()
             self.wfile.write(b"OK")
 
