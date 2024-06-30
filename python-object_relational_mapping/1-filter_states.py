@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Module for Selecting states"""
+"""Module for Selecting states starting with N"""
 
 if __name__ == '__main__':
     from sys import argv
@@ -12,10 +12,11 @@ if __name__ == '__main__':
     )
     cursor = db.cursor()
 
-    cursor.execute('SELECT * FROM states')
+    cursor.execute('SELECT * FROM states ORDER BY id')
 
     for state in cursor.fetchall():
-        print(state)
+        if state[1][0] == 'N':
+            print(state)
 
     if cursor:
         cursor.close()
