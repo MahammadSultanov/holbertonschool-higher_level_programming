@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Module for Selecting states"""
+"""Module for Selecting statess"""
 
 if __name__ == '__main__':
     from sys import argv
