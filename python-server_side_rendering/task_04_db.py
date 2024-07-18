@@ -1,87 +1,64 @@
-from flask import Flask, render_template, request, jsonify
-import json
-import csv
-from os import error
 import sqlite3
+import csv
+import json
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
-def read_json_data(file_path):
-    with open(file_path, 'r') as file:
-        data = json.load(file)
+# Function to read JSON data from file
+def read_json_data():
+    with open('products.json', 'r') as json_file:
+        data = json.load(json_file)
     return data
 
-def read_csv_data(file_path):
+# Function to read CSV data from file
+def read_csv_data():
     data = []
-    with open(file_path, 'r') as file:
-        csv_reader = csv.DictReader(file)
-        for row in csv_reader:
-            row['id'] = int(row['id'])
-            row['price'] = float(row['price'])
-            data.append(row)
+    with open('products.csv', 'r', newline='') as csv_file:
+        reader = csv.DictReader(csv_file)
+        for row in reader:
+            data.append({
+                'id': int(row['id']),
+                'name': row['name'],
+                'category': row['category'],
+                'price': float(row['price'])
+            })
     return data
 
-def read_sql_data(db_path):
-    
-    conn = sqlite3.connect(db_path)
+# Function to read SQLite data from database
+def read_sqlite_data():
+    conn = sqlite3.connect('products.db')
     cursor = conn.cursor()
-
-    cursor.execute("SELECT * FROM products")
-
-    rows = cursor.fetchall()
-    cursor.close()
+    cursor.execute('SELECT * FROM Products')
+    data = cursor.fetchall()
     conn.close()
+    return [{'id': row[0], 'name': row[1], 'category': row[2], 'price': float(row[3])} for row in data]
 
-    return [{'id': row[0], 'name': row[1], 'category': row[2], 'price': float(row[3])} for row in rows]
-
-def filter_data_by_id(data, product_id):
-    return [product for product in data if product['id'] == product_id]
-
-@app.route('/')
-def home():
-    return render_template('index.html')
-
-@app.route('/about')
-def about():
-    return render_template('about.html')
-
-@app.route('/contact')
-def contact():
-    return render_template('contact.html')
-
-@app.route('/items')
-def items():
-    try:
-        with open('items.json', 'r', encoding="utf-8") as f:
-            data = json.load(f)
-            items = data.get('items', [])
-    except FileNotFoundError:
-        items = []
-    return render_template('items.html', items=items)
-
+# Route to display products based on source (json, csv, sql) and optional id parameter
 @app.route('/products')
 def products():
     source = request.args.get('source')
-    product_id = request.args.get('id')
-    data = []
-    error_message = None
-    
+    id = request.args.get('id')
+
+    if source not in ['json', 'csv', 'sql']:
+        error = "Wrong source"
+        return render_template('product_display.html', error=error)
+
     if source == 'json':
-        data = read_json_data('products.json')
+        data = read_json_data()
     elif source == 'csv':
-        data = read_csv_data('products.csv')
+        data = read_csv_data()
     elif source == 'sql':
-        data, error_message = read_sql_data('products.db')
+        data = read_sqlite_data()
+
+    if id:
+        filtered_products = [product for product in data if str(product['id']) == id]
+        if not filtered_products:
+            error = "Product not found"
+            return render_template('product_display.html', error=error)
+        return render_template('product_display.html', products=filtered_products)
     else:
-        error_message = "Wrong source"
-        return render_template('product_display.html', error=error_message)
-    
-    if not error_message and product_id:
-        data = filter_data_by_id(data, int(product_id))
-    if not data:
-        error_message = "Product not found"
-    
-    return render_template('product_display.html', products=data, error=error_message)
- 
+        return render_template('product_display.html', products=data)
+
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    app.run(debug=True)
