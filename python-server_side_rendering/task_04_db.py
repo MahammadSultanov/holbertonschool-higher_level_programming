@@ -21,23 +21,18 @@ def read_csv_data(file_path):
             data.append(row)
     return data
 
-def read_sql_data(db_path, query):
+def read_sql_data(db_path):
     
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
-    cursor.execute(query)
+    cursor.execute("SELECT * FROM products")
 
     rows = cursor.fetchall()
-
-    column_names = [description[0] for description in cursor.description]
-
     cursor.close()
     conn.close()
 
-    result = [dict(zip(column_names, row)) for row in rows]
-
-    return result
+    return [{'id': row[0], 'name': row[1], 'category': row[2], 'price': float(row[3])} for row in rows]
 
 def filter_data_by_id(data, product_id):
     return [product for product in data if product['id'] == product_id]
@@ -76,8 +71,7 @@ def products():
     elif source == 'csv':
         data = read_csv_data('products.csv')
     elif source == 'sql':
-        query = "SELECT * FROM products"
-        data, error_message = read_sql_data('products.db', query)
+        data, error_message = read_sql_data('products.db')
     else:
         error_message = "Wrong source"
         return render_template('product_display.html', error=error_message)
