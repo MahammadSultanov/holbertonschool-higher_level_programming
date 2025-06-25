@@ -1,32 +1,15 @@
 #!/usr/bin/python3
-"""Script with Geometry class."""
-
-
-class BaseGeometry:
-    """Geometry class."""
-
-    def __init__(self):
-        """Initialize object."""
-        pass
-
-    def area(self):
-        """Raise an exception."""
-        raise Exception("area() is not implemented")
-
-    def integer_validator(self, name, value):
-        """Validate the value passed as int."""
-        if type(value) is not int:
-            raise TypeError(f"{name} must be an integer")
-        elif value <= 0:
-            raise ValueError(f"{name} must be greater than 0")
+"""Module containing BaseGeometry class"""
+BaseGeometry = __import__('7-base_geometry').BaseGeometry
 
 
 class Rectangle(BaseGeometry):
-    """Rectangle class inherited from BaseGeometry class."""
+    """Rectangle class based on BaseGeometry class"""
 
     def __init__(self, width, height):
-        """Initialize rectangle with width and height and validate both."""
+        """Initializing for Rectangle object"""
+
         self.integer_validator("width", width)
-        self.integer_validator("height", height)
         self.__width = width
+        self.integer_validator("height", height)
         self.__height = height
