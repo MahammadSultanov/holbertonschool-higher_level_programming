@@ -1,18 +1,15 @@
 #!/usr/bin/python3
-"""Module containing empty class"""
+"""This module has a class"""
 
 
 class BaseGeometry:
-    """Class for BaseGeometry"""
+    """This is a class."""
     def area(self):
-        """Method to raise exception"""
         raise Exception("area() is not implemented")
 
     def integer_validator(self, name, value):
-        """Method to validate integer"""
-
-        if type(value) is not int:
-            raise TypeError(name + " must be an integer")
-
-        if value <= 0:
-            raise ValueError("{} must be greater than 0".format(name))
+        """Validates integers."""
+        if type(value) is not int or isinstance(value, bool):
+            raise TypeError(f"{name} must be an integer")
+        elif value <= 0:
+            raise ValueError(f"{name} must be greater than 0")
